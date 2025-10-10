@@ -64,9 +64,12 @@ func Part2() {
 	inputData := readInputData()
 	//считаем
 	var resultSum int
-	for i := 0; i < len(inputData[0]); i++ {
-		resultSum += int(math.Abs(float64(inputData[0][i] - inputData[1][i])))
-
+	for _, left := range inputData[0] {
+		for _, right := range inputData[1] {
+			if left == right {
+				resultSum += left
+			}
+		}
 	}
 	log.Printf("Итоговая сумма: %d", resultSum)
 }
