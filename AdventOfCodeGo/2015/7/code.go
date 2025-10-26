@@ -17,18 +17,18 @@ const (
 
 var (
 	//Инструкции
-	instructions = make(map[string]LeftPart)
+	instructions = make(map[string]leftPart)
 	//Результаты инструкций
 	results = make(map[string]uint16)
 )
 
-type LeftPart struct {
+type leftPart struct {
 	Instruction    func(wires []uint16) uint16
 	WiresOrNumbers []string
 }
 
-func NewLeftPart(instruction string) LeftPart {
-	result := LeftPart{}
+func newLeftPart(instruction string) leftPart {
+	result := leftPart{}
 
 	parts := strings.Fields(instruction)
 	if len(parts) == 1 {
@@ -89,7 +89,7 @@ func Part1() {
 		if len(curStr) > 0 {
 			//Записываем инструкцию
 			parts := strings.Split(curStr, wordBetweenLeftAndRightParts)
-			instructions[strings.TrimSpace(parts[1])] = NewLeftPart(parts[0])
+			instructions[strings.TrimSpace(parts[1])] = newLeftPart(parts[0])
 		} else {
 			break
 		}

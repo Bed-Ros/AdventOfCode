@@ -11,24 +11,20 @@ const (
 	inputDataPath = "2015/3/Вводные данные.txt"
 )
 
-type Point struct {
-	X, Y int
+type santa struct {
+	Points   map[СommonElements.Point]bool
+	curPoint СommonElements.Point
 }
 
-type Santa struct {
-	Points   map[Point]bool
-	curPoint Point
-}
-
-func NewSanta() Santa {
-	result := Santa{
-		Points:   make(map[Point]bool),
-		curPoint: Point{0, 0}}
+func newSanta() santa {
+	result := santa{
+		Points:   make(map[СommonElements.Point]bool),
+		curPoint: СommonElements.Point{}}
 	result.Points[result.curPoint] = true
 	return result
 }
 
-func (s *Santa) Step(symbol byte) {
+func (s *santa) Step(symbol byte) {
 	switch symbol {
 	case '^':
 		s.curPoint.Y++
@@ -46,7 +42,7 @@ func (s *Santa) Step(symbol byte) {
 	s.Points[s.curPoint] = true
 }
 
-func (s *Santa) GetUniqueHouses() int {
+func (s *santa) GetUniqueHouses() int {
 	return len(s.Points)
 }
 
@@ -56,7 +52,7 @@ func Part1() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	santa := NewSanta()
+	santa := newSanta()
 	//для каждого символа
 	for _, b := range bytes {
 		santa.Step(b)
@@ -70,9 +66,9 @@ func Part2() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	santas := []Santa{
-		NewSanta(),
-		NewSanta(),
+	santas := []santa{
+		newSanta(),
+		newSanta(),
 	}
 	//для каждого символа
 	for i, b := range bytes {

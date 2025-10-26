@@ -61,7 +61,7 @@ func (t dirTree) FullSize() int {
 }
 
 func createDirTree() dirTree {
-	//Открывам файл
+	//Открываем файл
 	inputFile, err := os.Open(inputDataPath)
 	if err != nil {
 		log.Fatalln(err)

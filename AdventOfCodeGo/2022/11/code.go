@@ -16,7 +16,7 @@ const (
 )
 
 type bigNumber struct {
-	NumberOfQuintillions *bigNumber //количество слогаемых числа, равные 10^18
+	NumberOfQuintillions *bigNumber //количество слагаемых числа, равные 10^18
 	LeftOver             int64      //остаток < 10^18
 }
 
@@ -116,7 +116,7 @@ type monkey struct {
 }
 
 func readMonkeysFromFile() []monkey {
-	//Открывам файл
+	//Открываем файл
 	inputFile, err := os.Open(inputDataPath)
 	if err != nil {
 		log.Fatalln(err)

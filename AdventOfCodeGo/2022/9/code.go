@@ -15,13 +15,8 @@ const (
 	inputDataPath = "2022/9/Вводные данные.txt"
 )
 
-type coord struct {
-	Y int
-	X int
-}
-
 func Part1() {
-	//Открывам файл
+	//Открываем файл
 	inputFile, err := os.Open(inputDataPath)
 	if err != nil {
 		log.Fatalln(err)
@@ -29,10 +24,10 @@ func Part1() {
 	scanner := bufio.NewReader(inputFile)
 	//Нужные переменные
 	brkFor := false
-	var head coord
-	var headOld coord
-	var tail coord
-	result := map[coord]bool{tail: true}
+	var head СommonElements.Point
+	var headOld СommonElements.Point
+	var tail СommonElements.Point
+	result := map[СommonElements.Point]bool{tail: true}
 	//Для каждой строки:
 	for {
 		curStr, err := scanner.ReadString('\n')
@@ -75,7 +70,7 @@ func Part1() {
 }
 
 func Part2() {
-	//Открывам файл
+	//Открываем файл
 	inputFile, err := os.Open(inputDataPath)
 	if err != nil {
 		log.Fatalln(err)
@@ -83,11 +78,11 @@ func Part2() {
 	scanner := bufio.NewReader(inputFile)
 	//Нужные переменные
 	brkFor := false
-	var knots []coord
+	var knots []СommonElements.Point
 	for i := 0; i < 10; i++ {
-		knots = append(knots, coord{})
+		knots = append(knots, СommonElements.Point{})
 	}
-	result := map[coord]bool{coord{}: true}
+	result := map[СommonElements.Point]bool{СommonElements.Point{}: true}
 	//Для каждой строки:
 	//printRopeOnCoordinateSystem(knots)
 	for {
@@ -148,16 +143,16 @@ func Part2() {
 	fmt.Printf("%d позиций хотя бы один раз посетил хвост веревки", len(result))
 }
 
-func printRopeOnCoordinateSystem(rope []coord) {
-	minCoord := coord{
+func printRopeOnCoordinateSystem(rope []СommonElements.Point) {
+	minCoord := СommonElements.Point{
 		Y: syscall.INFINITE,
 		X: syscall.INFINITE,
 	}
-	maxCoord := coord{
+	maxCoord := СommonElements.Point{
 		Y: -syscall.INFINITE,
 		X: -syscall.INFINITE,
 	}
-	curRopeMap := make(map[coord]rune)
+	curRopeMap := make(map[СommonElements.Point]rune)
 	for i := len(rope) - 1; i >= 0; i-- {
 		knot := rope[i]
 		if knot.X > maxCoord.X {
@@ -181,7 +176,7 @@ func printRopeOnCoordinateSystem(rope []coord) {
 	for y := maxCoord.Y; y >= minCoord.Y; y-- {
 		var curLine []rune
 		for x := minCoord.X; x <= maxCoord.X; x++ {
-			n, ok := curRopeMap[coord{
+			n, ok := curRopeMap[СommonElements.Point{
 				Y: y,
 				X: x,
 			}]

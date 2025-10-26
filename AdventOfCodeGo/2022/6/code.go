@@ -11,16 +11,8 @@ const (
 	inputDataPath = "2022/6/Вводные данные.txt"
 )
 
-func Part1() {
-	mainPart(4)
-}
-
-func Part2() {
-	mainPart(14)
-}
-
 func mainPart(carriageLength int) {
-	//Открывам файл
+	//Открываем файл
 	inputFile, err := os.Open(inputDataPath)
 	if err != nil {
 		log.Fatalln(err)
@@ -71,4 +63,12 @@ func allRunesDifferent(runes []rune) bool {
 		helpMap[r] = true
 	}
 	return true
+}
+
+func Part1() {
+	mainPart(4)
+}
+
+func Part2() {
+	mainPart(14)
 }

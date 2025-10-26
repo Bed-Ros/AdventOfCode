@@ -28,7 +28,7 @@ var (
 )
 
 func Part1() {
-	//Открывам файл
+	//Открываем файл
 	inputFile, err := os.Open(inputDataPath)
 	if err != nil {
 		log.Fatalln(err)
@@ -68,7 +68,7 @@ func Part1() {
 }
 
 func Part2() {
-	//Открывам файл
+	//Открываем файл
 	inputFile, err := os.Open(inputDataPath)
 	if err != nil {
 		log.Fatalln(err)

@@ -18,11 +18,6 @@ const (
 	west
 )
 
-type point struct {
-	X int
-	Y int
-}
-
 func Part1() {
 	//Открываем файл
 	bytes, err := os.ReadFile(inputDataPath)
@@ -84,8 +79,8 @@ func Part2() {
 	}
 	//Берем шаги
 	steps := strings.Split(string(bytes), ",")
-	var curCoord point
-	coords := make(map[point]bool)
+	var curCoord СommonElements.Point
+	coords := make(map[СommonElements.Point]bool)
 	coords[curCoord] = true
 	direction := north
 	//Для каждого шага:

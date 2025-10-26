@@ -12,14 +12,14 @@ const (
 	inputDataPath = "2024/7/Вводные данные.txt"
 )
 
-func readInput() []Equation {
+func readInput() []equation {
 	file, err := os.Open(inputDataPath)
 	if err != nil {
 		panic(err)
 	}
 	defer file.Close()
 
-	var result []Equation
+	var result []equation
 
 	reader := bufio.NewReader(file)
 	for {
@@ -29,7 +29,7 @@ func readInput() []Equation {
 		}
 		parts := strings.Split(line, ":")
 		r, _ := strconv.Atoi(parts[0])
-		newEquation := Equation{Result: r}
+		newEquation := equation{Result: r}
 		for _, s := range strings.Fields(parts[1]) {
 			n, _ := strconv.Atoi(s)
 			newEquation.Numbers = append(newEquation.Numbers, n)
@@ -39,12 +39,12 @@ func readInput() []Equation {
 	return result
 }
 
-type Equation struct {
+type equation struct {
 	Result  int
 	Numbers []int
 }
 
-func (e Equation) FindSolution(operations []func(x1, x2 int) int) bool {
+func (e equation) findSolution(operations []func(x1, x2 int) int) bool {
 	if len(e.Numbers) == 0 {
 		return false
 	}
@@ -59,20 +59,20 @@ func (e Equation) FindSolution(operations []func(x1, x2 int) int) bool {
 		if result > e.Result {
 			continue
 		}
-		subEquation := Equation{Result: e.Result, Numbers: append([]int{result}, e.Numbers[2:]...)}
-		if subEquation.FindSolution(operations) {
+		subEquation := equation{Result: e.Result, Numbers: append([]int{result}, e.Numbers[2:]...)}
+		if subEquation.findSolution(operations) {
 			return true
 		}
 	}
 	return false
 }
 
-func MainFunc(operations []func(x1, x2 int) int) {
+func mainFunc(operations []func(x1, x2 int) int) {
 	equations := readInput()
 	var result int
-	for _, equation := range equations {
-		if equation.FindSolution(operations) {
-			result += equation.Result
+	for _, eq := range equations {
+		if eq.findSolution(operations) {
+			result += eq.Result
 		}
 	}
 	fmt.Printf("Результат: %d", result)
@@ -83,7 +83,7 @@ func Part1() {
 		func(x1, x2 int) int { return x1 * x2 },
 		func(x1, x2 int) int { return x1 + x2 },
 	}
-	MainFunc(operations)
+	mainFunc(operations)
 }
 
 func Part2() {
@@ -95,5 +95,5 @@ func Part2() {
 			return r
 		},
 	}
-	MainFunc(operations)
+	mainFunc(operations)
 }

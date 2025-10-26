@@ -13,13 +13,8 @@ const (
 	inputDataPath = "2022/8/Вводные данные.txt"
 )
 
-type coord struct {
-	y int
-	x int
-}
-
 func readTreeMap() [][]int {
-	//Открывам файл
+	//Открываем файл
 	inputFile, err := os.Open(inputDataPath)
 	if err != nil {
 		log.Fatalln(err)
@@ -54,21 +49,21 @@ func Part1() {
 	forestMap := readTreeMap()
 	h := len(forestMap)
 	w := len(forestMap[0])
-	result := make(map[coord]bool)
+	result := make(map[СommonElements.Point]bool)
 	//слева | справа
 	for lineIndex := 1; lineIndex < h-1; lineIndex++ {
 		line := forestMap[lineIndex]
 		leftMax := line[0]
 		for i := 1; i < w-1; i++ {
 			if line[i] > leftMax {
-				result[coord{lineIndex, i}] = true
+				result[СommonElements.Point{X: lineIndex, Y: i}] = true
 				leftMax = line[i]
 			}
 		}
 		rightMax := line[w-1]
 		for i := w - 2; i > 0; i-- {
 			if line[i] > rightMax {
-				result[coord{lineIndex, i}] = true
+				result[СommonElements.Point{X: lineIndex, Y: i}] = true
 				rightMax = line[i]
 			}
 		}
@@ -78,14 +73,14 @@ func Part1() {
 		topMax := forestMap[0][columnIndex]
 		for i := 1; i < h-1; i++ {
 			if forestMap[i][columnIndex] > topMax {
-				result[coord{i, columnIndex}] = true
+				result[СommonElements.Point{X: i, Y: columnIndex}] = true
 				topMax = forestMap[i][columnIndex]
 			}
 		}
 		bottomMax := forestMap[h-1][columnIndex]
 		for i := h - 2; i > 0; i-- {
 			if forestMap[i][columnIndex] > bottomMax {
-				result[coord{i, columnIndex}] = true
+				result[СommonElements.Point{X: i, Y: columnIndex}] = true
 				bottomMax = forestMap[i][columnIndex]
 			}
 		}

@@ -13,15 +13,11 @@ const (
 	inputDataPath = "2015/6/Вводные данные.txt"
 )
 
-type Point struct {
-	X, Y int
-}
-
-type LightsGrid struct {
+type lightsGrid struct {
 	Lights [1000][1000]bool
 }
 
-func (g *LightsGrid) Toggle(begin, end Point) {
+func (g *lightsGrid) Toggle(begin, end СommonElements.Point) {
 	for x := begin.X; x <= end.X; x++ {
 		for y := begin.Y; y <= end.Y; y++ {
 			g.Lights[y][x] = !g.Lights[y][x]
@@ -29,7 +25,7 @@ func (g *LightsGrid) Toggle(begin, end Point) {
 	}
 }
 
-func (g *LightsGrid) Set(value bool, begin, end Point) {
+func (g *lightsGrid) Set(value bool, begin, end СommonElements.Point) {
 	for x := begin.X; x <= end.X; x++ {
 		for y := begin.Y; y <= end.Y; y++ {
 			g.Lights[y][x] = value
@@ -37,7 +33,7 @@ func (g *LightsGrid) Set(value bool, begin, end Point) {
 	}
 }
 
-func (g *LightsGrid) NumberOfLitLights() int {
+func (g *lightsGrid) NumberOfLitLights() int {
 	var result int
 	for x := 0; x < len(g.Lights[0]); x++ {
 		for y := 0; y < len(g.Lights); y++ {
@@ -49,11 +45,11 @@ func (g *LightsGrid) NumberOfLitLights() int {
 	return result
 }
 
-type RightLightsGrid struct {
+type rightLightsGrid struct {
 	Lights [1000][1000]int
 }
 
-func (g *RightLightsGrid) Add(value int, begin, end Point) {
+func (g *rightLightsGrid) Add(value int, begin, end СommonElements.Point) {
 	for x := begin.X; x <= end.X; x++ {
 		for y := begin.Y; y <= end.Y; y++ {
 			g.Lights[y][x] += value
@@ -64,7 +60,7 @@ func (g *RightLightsGrid) Add(value int, begin, end Point) {
 	}
 }
 
-func (g *RightLightsGrid) TotalBrightness() int {
+func (g *rightLightsGrid) TotalBrightness() int {
 	var result int
 	for x := 0; x < len(g.Lights[0]); x++ {
 		for y := 0; y < len(g.Lights); y++ {
@@ -74,11 +70,11 @@ func (g *RightLightsGrid) TotalBrightness() int {
 	return result
 }
 
-func WordToPoint(word string) Point {
+func wordToPoint(word string) СommonElements.Point {
 	parts := strings.Split(word, ",")
 	x, _ := strconv.Atoi(parts[0])
 	y, _ := strconv.Atoi(parts[1])
-	return Point{
+	return СommonElements.Point{
 		X: x,
 		Y: y,
 	}
@@ -90,7 +86,7 @@ func Part1() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	var field LightsGrid
+	var field lightsGrid
 	//Для каждой строки:
 	scanner := bufio.NewReader(inputFile)
 	for {
@@ -98,11 +94,11 @@ func Part1() {
 		if len(curStr) > 0 {
 			parts := strings.Fields(curStr)
 			if parts[0] == "toggle" {
-				field.Toggle(WordToPoint(parts[1]), WordToPoint(parts[3]))
+				field.Toggle(wordToPoint(parts[1]), wordToPoint(parts[3]))
 			} else if parts[1] == "on" {
-				field.Set(true, WordToPoint(parts[2]), WordToPoint(parts[4]))
+				field.Set(true, wordToPoint(parts[2]), wordToPoint(parts[4]))
 			} else if parts[1] == "off" {
-				field.Set(false, WordToPoint(parts[2]), WordToPoint(parts[4]))
+				field.Set(false, wordToPoint(parts[2]), wordToPoint(parts[4]))
 			}
 		} else {
 			break
@@ -117,7 +113,7 @@ func Part2() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	var field RightLightsGrid
+	var field rightLightsGrid
 	//Для каждой строки:
 	scanner := bufio.NewReader(inputFile)
 	for {
@@ -125,11 +121,11 @@ func Part2() {
 		if len(curStr) > 0 {
 			parts := strings.Fields(curStr)
 			if parts[0] == "toggle" {
-				field.Add(2, WordToPoint(parts[1]), WordToPoint(parts[3]))
+				field.Add(2, wordToPoint(parts[1]), wordToPoint(parts[3]))
 			} else if parts[1] == "on" {
-				field.Add(1, WordToPoint(parts[2]), WordToPoint(parts[4]))
+				field.Add(1, wordToPoint(parts[2]), wordToPoint(parts[4]))
 			} else if parts[1] == "off" {
-				field.Add(-1, WordToPoint(parts[2]), WordToPoint(parts[4]))
+				field.Add(-1, wordToPoint(parts[2]), wordToPoint(parts[4]))
 			}
 		} else {
 			break

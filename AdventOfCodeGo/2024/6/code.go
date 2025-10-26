@@ -15,22 +15,22 @@ const (
 	point         = 'o'
 )
 
-type Room struct {
-	Walls map[Point]interface{}
-	Guard Point
-	Size  Point
+type room struct {
+	Walls map[СommonElements.Point]interface{}
+	Guard СommonElements.Point
+	Size  СommonElements.Point
 }
 
-func (r Room) Print(points map[Point]interface{}) {
+func (r room) print(points map[СommonElements.Point]interface{}) {
 	for y := 0; y < r.Size.Y; y++ {
 		for x := 0; x < r.Size.X; x++ {
-			curPoint := Point{x, y}
+			curPoint := СommonElements.Point{X: x, Y: y}
 			_, isWall := r.Walls[curPoint]
 			if isWall {
 				fmt.Printf(string(wall))
 				continue
 			}
-			if r.Guard.Equal(curPoint) {
+			if r.Guard == curPoint {
 				fmt.Printf(string(guard))
 				continue
 			}
@@ -46,16 +46,16 @@ func (r Room) Print(points map[Point]interface{}) {
 	fmt.Println()
 }
 
-func (r Room) SimulateGuard() (map[Point]interface{}, bool) {
-	vectors := []Point{
+func (r room) simulateGuard() (map[СommonElements.Point]interface{}, bool) {
+	vectors := []СommonElements.Point{
 		{0, -1}, //Вверх
 		{1, 0},  //Вправо
 		{0, 1},  //Вниз
 		{-1, 0}, //Влево
 	}
 	vectorIndex := 0
-	steps := make(map[Step]interface{})
-	points := make(map[Point]interface{})
+	steps := make(map[step]interface{})
+	points := make(map[СommonElements.Point]interface{})
 	for {
 		//Создаем следующую предполагаемую позицию охранника
 		nextGuardPoint := r.Guard.Add(vectors[vectorIndex])
@@ -74,7 +74,7 @@ func (r Room) SimulateGuard() (map[Point]interface{}, bool) {
 			break
 		}
 		//Проверяем что данного шага не было, иначе охранник в петле
-		curStep := Step{
+		curStep := step{
 			Location: r.Guard,
 			Vector:   vectors[vectorIndex],
 		}
@@ -90,34 +90,22 @@ func (r Room) SimulateGuard() (map[Point]interface{}, bool) {
 	return points, false
 }
 
-type Step struct {
-	Location Point
-	Vector   Point
+type step struct {
+	Location СommonElements.Point
+	Vector   СommonElements.Point
 }
 
-type Point struct {
-	X, Y int
-}
-
-func (p Point) Equal(another Point) bool {
-	return p.X == another.X && p.Y == another.Y
-}
-
-func (p Point) Add(other Point) Point {
-	return Point{p.X + other.X, p.Y + other.Y}
-}
-
-func readInput() Room {
+func readInput() room {
 	file, err := os.Open(inputDataPath)
 	if err != nil {
 		panic(err)
 	}
 	defer file.Close()
 
-	wallsPoints := make(map[Point]interface{})
-	var guardPoint Point
+	wallsPoints := make(map[СommonElements.Point]interface{})
+	var guardPoint СommonElements.Point
 
-	var curPoint Point
+	var curPoint СommonElements.Point
 	reader := bufio.NewReader(file)
 	for {
 		r, _, err := reader.ReadRune()
@@ -139,7 +127,7 @@ func readInput() Room {
 		curPoint.X++
 	}
 	curPoint.Y++
-	return Room{
+	return room{
 		Walls: wallsPoints,
 		Guard: guardPoint,
 		Size:  curPoint,
@@ -148,7 +136,7 @@ func readInput() Room {
 
 func Part1() {
 	room := readInput()
-	points, isLoop := room.SimulateGuard()
+	points, isLoop := room.simulateGuard()
 	if isLoop {
 		fmt.Printf("Охранник застрял в петле")
 	}
@@ -157,16 +145,16 @@ func Part1() {
 
 func Part2() {
 	room := readInput()
-	points, isLoop := room.SimulateGuard()
-	//room.Print(points)
+	points, isLoop := room.simulateGuard()
+	//room.print(points)
 	if isLoop {
 		fmt.Printf("Охранник застрял в петле")
 	}
 	var result int
 	for point := range points {
 		room.Walls[point] = nil
-		points, isLoop = room.SimulateGuard()
-		//room.Print(points)
+		points, isLoop = room.simulateGuard()
+		//room.print(points)
 		if isLoop {
 			result++
 		}

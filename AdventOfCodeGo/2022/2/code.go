@@ -19,7 +19,7 @@ func Part1() {
 		"B": {"X": 0, "Y": 3, "Z": 6},
 		"C": {"X": 6, "Y": 0, "Z": 3},
 	}
-	//Открывам файл
+	//Открываем файл
 	inputFile, err := os.Open(inputDataPath)
 	if err != nil {
 		log.Fatalln(err)
@@ -65,7 +65,7 @@ func Part2() {
 		"B": {"X": 1, "Y": 2, "Z": 3},
 		"C": {"X": 2, "Y": 3, "Z": 1},
 	}
-	//Открывам файл
+	//Открываем файл
 	inputFile, err := os.Open(inputDataPath)
 	if err != nil {
 		log.Fatalln(err)
